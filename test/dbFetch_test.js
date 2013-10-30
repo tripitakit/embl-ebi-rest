@@ -1,6 +1,20 @@
 'use strict';
 
-var embl_ebi_rest = require('../lib/embl-ebi-rest.js');
+var dbFetch = require('../lib/embl_ebi_rest.js').dbFetch;
+
+exports['test'] = {
+  setUp: function(done) {
+    done();
+  },
+  'dbFetch': function(test) {
+    test.expect(1);
+    test.doesNotThrow(function(){dbFetch.get()});
+    test.done();
+  },
+};
+
+
+
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -21,16 +35,3 @@ var embl_ebi_rest = require('../lib/embl-ebi-rest.js');
     test.doesNotThrow(block, [error], [message])
     test.ifError(value)
 */
-
-exports['awesome'] = {
-  setUp: function(done) {
-    // setup here
-    done();
-  },
-  'no args': function(test) {
-    test.expect(1);
-    // tests here
-    test.equal(embl_ebi_rest.awesome(), 'awesome', 'should be awesome.');
-    test.done();
-  },
-};
