@@ -24,12 +24,12 @@ var wap_rat = new dbFetch({ db: 'uniprotkb',
 							style: 'raw' });
 
 /* 
-  The request in handled asynchronously:
-  When the reception of the response object is completed,
-  a dbFetch instance emits a 'stored' event  and stores 
-  the fetched results in its own entity property.
-  To access/handle the results add a listener for 'stored' event
-  with a callback to do something with it.
+  The request in handled asynchronously.
+  When response object is fully received,
+  dbFetch instances emit the 'stored' event and  
+  store the results in their own entity property.
+  To access/handle the results add to the dbFetch instance 
+  a listener for 'stored' event, with a callback to do something with it.
  */
 wap_rat.on('stored', function() { console.log(wap_rat.entity) });
 
