@@ -1,9 +1,14 @@
 # embl-ebi-rest
 
 A client for EMBL-EBI REST Web Services.
-Features:
-	* dbFetch : early-alpha api for WSDbfetch
 
+----
+
+Featuring (early-alphas)
+
+* dbFetch : early-alpha api for WSDbfetch
+
+----
 
 
 ## Getting Started
