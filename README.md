@@ -12,11 +12,11 @@ Install the module with: `npm install embl-ebi-rest`
 
 var dbFetch = require('embl-ebi-rest').dbFetch;
 
-var sample_query = {db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw"}
+var sample_query = { db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw" }
 
-var wap_rat = dbFetch(sample_query);
+var wap_rat = new dbFetch(sample_query);
 
-wap_rat.on('stored', function(){ console.log(wap_rat.entity) } );
+wap_rat.on('stored', function() { console.log(wap_rat.entity) } );
 
 wap_rat.get(); 
 
