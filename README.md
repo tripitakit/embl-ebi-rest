@@ -1,27 +1,34 @@
 # embl-ebi-rest
 
 A client for EMBL-EBI REST Web Services.
+Features:
+	* dbFetch : early-alpha api for WSDbfetch
 
-Early-alpha, starting with Dbfetch.
 
 
 ## Getting Started
 Install the module with: `npm install embl-ebi-rest`
 
 ```javascript
-
+// require dbFetch constructor
 var dbFetch = require('embl-ebi-rest').dbFetch;
 
-// query single id/accession
+// prepare a query for a single id (or accession)
 var wap_rat = new dbFetch({ db: 'uniprotkb',
 							id:'WAP_RAT',
 							format: 'fasta',
 							style: 'raw' });
 
+
+// the request in handled asynchronously (by rest),
+// dbFetch emits a 'stored' events when receive the response object,
+// add a listener for 'stored' event to handle the fetched results saved in its entity property
 wap_rat.on('stored', function() { console.log(wap_rat.entity) });
+
+// execute the query
 wap_rat.get(); 
 
-// query multiple ids/accessions
+// dbFetch also handles multiple id/accession queries:
 var multiple_entries = new dbFetch({ db: 'embl',
 									 id: 'M10051, K00650, D87894, AJ242600',
 									 format: 'fasta',
@@ -29,7 +36,6 @@ var multiple_entries = new dbFetch({ db: 'embl',
 									 
 multiple_entries.on('stored', function() { console.log(multiple_entries.entity) });
 multiple_entries.get(); 
-
 ```
 
 #### WSDbfetch
