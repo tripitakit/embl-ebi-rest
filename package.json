@@ -33,6 +33,8 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt": "~0.4.1"
   },
-  "dependencies": {},
+  "dependencies": {
+	  "rest": "~1.0.0"
+  },
   "keywords": ["EMBL", "EBI", "Bioinformatics", "REST"]
 }

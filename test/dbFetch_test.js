@@ -4,34 +4,20 @@ var dbFetch = require('../lib/embl-ebi-rest.js').dbFetch;
 
 exports['test'] = {
   setUp: function(done) {
+  	var sample = {db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw"}
+  	this.dbf = new dbFetch(sample);
     done();
   },
-  'dbFetch': function(test) {
+    
+  'dbFetch.get': function(test) {
     test.expect(1);
-    test.doesNotThrow(function(){dbFetch.get()});
-    test.done();
+
+	this.dbf.on('stored', function(){
+			test.equal(this.entity.slice(0,18), ">sp|P01174|WAP_RAT");
+  		    test.done();
+		}
+	);
+	this.dbf.get();
   },
+  
 };
-
-
-
-
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
