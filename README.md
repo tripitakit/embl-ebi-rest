@@ -10,25 +10,38 @@ Features:
 Install the module with: `npm install embl-ebi-rest`
 
 ```javascript
-// require dbFetch constructor
+/* 
+ * Start requiring the dbFetch constructor
+ */
 var dbFetch = require('embl-ebi-rest').dbFetch;
 
-// prepare a query for a single id (or accession)
+/*
+ * Prepare a query for a single id (or accession)
+ */
 var wap_rat = new dbFetch({ db: 'uniprotkb',
 							id:'WAP_RAT',
 							format: 'fasta',
 							style: 'raw' });
 
-
-// the request in handled asynchronously (by rest),
-// dbFetch emits a 'stored' events when receive the response object,
-// add a listener for 'stored' event to handle the fetched results saved in its entity property
+/* 
+  The request in handled asynchronously:
+  When the reception of the response object is completed,
+  a dbFetch instance emits a 'stored' event  and stores 
+  the fetched results in its own entity property.
+  To access/handle the results add a listener for 'stored' event
+  with a callback to do something with it.
+ */
 wap_rat.on('stored', function() { console.log(wap_rat.entity) });
 
-// execute the query
+/*
+ * Execute the query
+ */
 wap_rat.get(); 
 
-// dbFetch also handles multiple id/accession queries:
+
+/* 
+ * dbFetch also handles multiple id/accession queries
+ */
 var multiple_entries = new dbFetch({ db: 'embl',
 									 id: 'M10051, K00650, D87894, AJ242600',
 									 format: 'fasta',
