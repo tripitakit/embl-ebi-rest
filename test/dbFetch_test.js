@@ -28,4 +28,16 @@ exports['test'] = {
 		test.done();
 	},
   
+  	'dbfetch.get with multiple id as string' : function(test) {
+  		test.expect(1);
+		var sample = {db:"embl", id:"M10051, K00650, D87894, AJ242600", format:"fasta", style:"raw"}
+		var dbfetch = new dbFetch(sample);
+		dbfetch.on('stored', function(){
+				test.equal(this.entity.length, 16415);
+			    test.done();
+			}
+		);
+		dbfetch.get();
+  	}
+  
 };

@@ -12,13 +12,23 @@ Install the module with: `npm install embl-ebi-rest`
 
 var dbFetch = require('embl-ebi-rest').dbFetch;
 
-var sample_query = { db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw" }
+// query single id/accession
+var wap_rat = new dbFetch({ db: 'uniprotkb',
+							id:'WAP_RAT',
+							format: 'fasta',
+							style: 'raw' });
 
-var wap_rat = new dbFetch(sample_query);
-
-wap_rat.on('stored', function() { console.log(wap_rat.entity) } );
-
+wap_rat.on('stored', function() { console.log(wap_rat.entity) });
 wap_rat.get(); 
+
+// query multiple ids/accessions
+var multiple_entries = new dbFetch({ db: 'embl',
+									 id: 'M10051, K00650, D87894, AJ242600',
+									 format: 'fasta',
+									 style: 'raw' });
+									 
+multiple_entries.on('stored', function() { console.log(multiple_entries.entity) });
+multiple_entries.get(); 
 
 ```
 
@@ -26,7 +36,7 @@ wap_rat.get();
 http://www.ebi.ac.uk/Tools/webservices/services/dbfetch_rest
 
 #### Databases
-http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases#edam
+http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases
 
 ## Contributing
 Any help, contribution, collaboration is highly appreciated! I've so much to learn ...
