@@ -1,15 +1,11 @@
 # embl-ebi-rest
 
-A client for EMBL-EBI REST Web Services.
+Client for EMBL-EBI REST Web Services.
 
-----
+(Prototype) early alpha api for:
 
-Featuring (early-alphas)
-
-* dbFetch : early-alpha api for WSDbfetch
-
-----
-
+* Dbfetch REST
+* (more to be added here)
 
 ## Getting Started
 Install the module with: `npm install embl-ebi-rest`
