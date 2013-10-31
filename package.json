@@ -1,26 +1,26 @@
 {
   "name": "embl-ebi-rest",
   "description": "EMBL-EBI Web Services REST client",
-  "version": "0.0.1",
-  "homepage": "https://github.com/patrick/embl-ebi-rest",
+  "version": "0.0.2",
+  "homepage": "https://github.com/tripitakit/embl-ebi-rest",
   "author": {
     "name": "Patrick De Marta",
     "email": "patrick.demarta@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/patrick/embl-ebi-rest.git"
+    "url": "git://github.com/tripitakit/embl-ebi-rest.git"
   },
   "bugs": {
-    "url": "https://github.com/patrick/embl-ebi-rest/issues"
+    "url": "https://github.com/tripitakit/embl-ebi-rest/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/patrick/embl-ebi-rest/blob/master/LICENSE-MIT"
+      "url": "https://github.com/tripitakit/embl-ebi-rest/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "lib/embl_ebi_rest",
+  "main": "lib/embl-ebi-rest",
   "engines": {
     "node": ">= 0.8.0"
   },

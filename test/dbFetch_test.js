@@ -1,6 +1,6 @@
 'use strict';
 
-var dbFetch = require('../lib/embl_ebi_rest.js').dbFetch;
+var dbFetch = require('../lib/embl-ebi-rest.js').dbFetch;
 
 exports['test'] = {
   setUp: function(done) {
