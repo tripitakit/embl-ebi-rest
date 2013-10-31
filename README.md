@@ -22,6 +22,12 @@ wap_rat.get();
 
 ```
 
+#### WSDbfetch
+http://www.ebi.ac.uk/Tools/webservices/services/dbfetch_rest
+
+#### Databases
+http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases#edam
+
 ## Contributing
 Any help, contribution, collaboration is highly appreciated! I've so much to learn ...
 
