@@ -4,7 +4,7 @@ Client for EMBL-EBI REST Web Services.
 
 (Prototype) early alpha api for:
 
-* Dbfetch REST
+* Dbfetch 
 * (more to be added here)
 
 ## Getting Started
