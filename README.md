@@ -5,7 +5,9 @@ Client for EMBL-EBI REST Web Services.
 (Prototype) early alpha stage.
 
 * Dbfetch : get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style.
-* DbfetchInfo : introspection of database meta-informations.
+* DbfetchInfo : introspection of Dbfetch database meta-informations.
+
+* ENAbrowser : The European Nucleotide Archive (ENA) captures and presents information relating to experimental workflows that are based around nucleotide sequencing. A typical workflow includes the isolation and preparation of material for sequencing, a run of a sequencing machine in which sequencing data are produced and a subsequent bioinformatic analysis pipeline. ENA records this information in a data model that covers input information (sample, experimental setup, machine configuration), output machine data (sequence traces, reads and quality scores) and interpreted information (assembly, mapping, functional annotation).
 
 (more to be added here!)
 
@@ -84,12 +86,12 @@ var embl = info.db('embl');
 /*
  * Get the infoFormatList meta-infos for a given db-meta-info object
  */
-var embl_formats = formats(embl)
+var embl_formats = info.formats(embl)
 
 /*
  * Get the format-meta-info-obj for a given db-meta-info-obj and a format-name
  */
-var embl_fasta = format(embl, 'fasta');
+var embl_fasta = info.format(embl, 'fasta');
 
 /*
  * Get the style-meta-info-obj for a given format-meta-info-onj
