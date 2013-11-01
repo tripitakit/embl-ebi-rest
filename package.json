@@ -36,5 +36,5 @@
   "dependencies": {
 	  "rest": "~1.0.0"
   },
-  "keywords": ["EMBL", "EBI", "Bioinformatics", "REST"]
+  "keywords": ["EMBL", "EBI", "rest", "webservices", "bioinformatics"]
 }

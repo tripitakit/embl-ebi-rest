@@ -4,7 +4,8 @@ Client for EMBL-EBI REST Web Services.
 
 (Prototype) early alpha api for:
 
-* Dbfetch 
+* Dbfetch : get an entry or a set of entries by the entry identifier from a database,
+			specifying the required data format and result style.
 * (more to be added here)
 
 ## Getting Started
@@ -12,25 +13,25 @@ Install the module with: `npm install embl-ebi-rest`
 
 ```javascript
 /* 
- * Start requiring the dbFetch constructor
+ * Start requiring the Dbfetch constructor
  */
-var dbFetch = require('embl-ebi-rest').dbFetch;
+var Dbfetch = require('embl-ebi-rest').Dbfetch;
 
 /*
- * Prepare a query for a single id (or accession)
+ * Create a Dbfetch instance with a parameters object to query
  */
-var wap_rat = new dbFetch({ db: 'uniprotkb',
+var wap_rat = new Dbfetch({ db: 'uniprotkb',
 							id:'WAP_RAT',
 							format: 'fasta',
 							style: 'raw' });
 
 /* 
   The request in handled asynchronously.
-  When response object is fully received,
-  dbFetch instances emit the 'stored' event and  
-  store the results in their own entity property.
-  To access/handle the results add to the dbFetch instance 
-  a listener for 'stored' event, with a callback to do something with it.
+  When the requested entry is fully received
+  Dbfetch instances emit a 'stored' event and  
+  store the fetched entry in a <instance>.entity property
+  Add a listener for 'stored' event to instance 
+  with a function to access and handle the entry at <instance>.entity 
  */
 wap_rat.on('stored', function() { console.log(wap_rat.entity) });
 
@@ -41,15 +42,16 @@ wap_rat.get();
 
 
 /* 
- * dbFetch also handles multiple id/accession queries
+ * Dbfetch also handles multiple id/accession queries
  */
-var multiple_entries = new dbFetch({ db: 'embl',
+var multiple_entries = new Dbfetch({ db: 'embl',
 									 id: 'M10051, K00650, D87894, AJ242600',
 									 format: 'fasta',
 									 style: 'raw' });
 									 
 multiple_entries.on('stored', function() { console.log(multiple_entries.entity) });
-multiple_entries.get(); 
+multiple_entries.get();
+
 ```
 
 #### WSDbfetch
