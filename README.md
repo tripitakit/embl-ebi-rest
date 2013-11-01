@@ -4,8 +4,7 @@ Client for EMBL-EBI REST Web Services.
 
 (Prototype) early alpha api for:
 
-* Dbfetch : get an entry or a set of entries by the entry identifier from a database,
-			specifying the required data format and result style.
+* Dbfetch : get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style.
 * (more to be added here)
 
 ## Getting Started
@@ -30,7 +29,9 @@ var wap_rat = new Dbfetch({ db: 'uniprotkb',
   is emitted when an entry is fetched and assigned to the instance's .entry property.
   Add a listener for it with a callback function to access and handle the entry data.
  */
-wap_rat.on('stored', function() { console.log(wap_rat.entry) });
+wap_rat.on('stored', function(){
+	console.log(wap_rat.entry);
+});
 
 /*
  * Execute the query
@@ -39,14 +40,21 @@ wap_rat.get();
 
 
 /* 
- * Multiple id/accession query
+ * Fetch multiple ids/accessions in raw/fasta format,
+ * access the parsed entry-objects with parseRawFasta().
+ * It parses raw/fasta only entry into object { id, accession, description, seq },
+ * an array of entry-objects is returned for multiple fasta records.
  */
 var multiple_ids = new Dbfetch({ db: 'embl',
 									 id: 'M10051, K00650, D87894, AJ242600',
 									 format: 'fasta',
 									 style: 'raw' });
 									 
-multiple_ids.on('stored', function() { console.log(multiple_ids.entry) });
+multiple_ids.on('stored', function() {
+	var entries = this.parseRawFasta();
+	console.log(entries);
+});
+
 multiple_ids.get();
 
 ```
@@ -58,7 +66,7 @@ http://www.ebi.ac.uk/Tools/webservices/services/dbfetch_rest
 http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases
 
 ## Contributing
-Any help, contribution, collaboration is highly appreciated! I've so much to learn ...
+Any help, contribution, collaboration is highly appreciated! There's so much to learn.
 
 Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
