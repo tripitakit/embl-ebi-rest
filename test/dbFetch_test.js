@@ -13,7 +13,7 @@ exports['test'] = {
 		var sample = {db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw"}
 		var dbfetch = new Dbfetch(sample);
 		dbfetch.on('stored', function(){
-				test.equal(this.entity.slice(0,18), ">sp|P01174|WAP_RAT");
+				test.equal(this.entry.slice(0,18), ">sp|P01174|WAP_RAT");
 			    test.done();
 			}
 		);
@@ -33,7 +33,7 @@ exports['test'] = {
 		var sample = {db:"embl", id:"M10051, K00650, D87894, AJ242600", format:"fasta", style:"raw"}
 		var dbfetch = new Dbfetch(sample);
 		dbfetch.on('stored', function(){
-				test.equal(this.entity.length, 16415);
+				test.equal(this.entry.length, 16415);
 			    test.done();
 			}
 		);

@@ -27,11 +27,11 @@ var wap_rat = new Dbfetch({ db: 'uniprotkb',
 
 /* 
   Dfetch is asynchronous.
-  When the entry is fully fetched it is assigned to the instance's .entity property,
+  When the entry is fully fetched it is assigned to the instance's .entry property,
   and Dbfetch instances emit the 'stored' event. Listen for it and pass in the callback
   function to access and handle the entry data.
  */
-wap_rat.on('stored', function() { console.log(wap_rat.entity) });
+wap_rat.on('stored', function() { console.log(wap_rat.entry) });
 
 /*
  * Execute the query
@@ -42,13 +42,13 @@ wap_rat.get();
 /* 
  * Dbfetch also handles multiple id/accession queries
  */
-var multiple_entries = new Dbfetch({ db: 'embl',
+var multiple_ids = new Dbfetch({ db: 'embl',
 									 id: 'M10051, K00650, D87894, AJ242600',
 									 format: 'fasta',
 									 style: 'raw' });
 									 
-multiple_entries.on('stored', function() { console.log(multiple_entries.entity) });
-multiple_entries.get();
+multiple_ids.on('stored', function() { console.log(multiple_ids.entry) });
+multiple_ids.get();
 
 ```
 
