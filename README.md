@@ -28,7 +28,7 @@ var wap_rat = new Dbfetch({ db: 'uniprotkb',
 /* 
   Dfetch is asynchronous.
   When the entry is fully fetched it is assigned to the instance's .entity property,
-  and Dbfetch instances emit the 'stored' event. Listen for it and pass in the callback 
+  and Dbfetch instances emit the 'stored' event. Listen for it and pass in the callback
   function to access and handle the entry data.
  */
 wap_rat.on('stored', function() { console.log(wap_rat.entity) });
