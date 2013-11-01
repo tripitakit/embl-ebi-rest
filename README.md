@@ -7,16 +7,19 @@ Client for EMBL-EBI REST Web Services.
 * Dbfetch : get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style.
 * (more to be added here)
 
-## Getting Started
-Install the module with: `npm install embl-ebi-rest`
+## Installation
+```
+$ npm install embl-ebi-rest
+```
 
+## Examples
 ```javascript
-/* 
- * Start requiring the Dbfetch constructor
+/**
+ * Dependencies
  */
 var Dbfetch = require('embl-ebi-rest').Dbfetch;
 
-/*
+/**
  * Create a Dbfetch instance with a parameters object to query
  */
 var wap_rat = new Dbfetch({ db: 'uniprotkb',
@@ -24,10 +27,10 @@ var wap_rat = new Dbfetch({ db: 'uniprotkb',
 							format: 'fasta',
 							style: 'raw' });
 
-/* 
-  Dfetch is an asynchronous events.EventEmitter: the 'stored' event 
-  is emitted when an entry is fetched and assigned to the instance's .entry property.
-  Add a listener for it with a callback function to access and handle the entry data.
+/** 
+  Dfetch works as an asynchronous event emitter: the 'stored' event 
+  is emitted when the entry is fetched and assigned to the instance's .entry property.
+  Add a listener for 'store' to your Dfetch instance, with a function to handle the entry.
  */
 wap_rat.on('stored', function(){
 	console.log(wap_rat.entry);
