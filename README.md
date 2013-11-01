@@ -2,10 +2,12 @@
 
 Client for EMBL-EBI REST Web Services.
 
-(Prototype) early alpha api for:
+(Prototype) early alpha stage.
 
 * Dbfetch : get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style.
-* (more to be added here)
+* DbfetchInfo : introspection of database meta-informations.
+
+(more to be added here!)
 
 ## Installation
 ```
@@ -59,6 +61,40 @@ multiple_ids.on('stored', function() {
 });
 
 multiple_ids.get();
+
+
+
+/**
+ * DbfetchInfo
+ * introspection of databases meta-informations
+ */
+
+var info = require('embl-ebi-rest').DbfetchInfo;
+ 
+/*
+ * Get a list of database names
+ */
+var db_list = info.db()
+  
+/*
+ * Get the db-meta-info object for a named database
+ */
+var embl = info.db('embl');
+   
+/*
+ * Get the infoFormatList meta-infos for a given db-meta-info object
+ */
+var embl_formats = formats(embl)
+
+/*
+ * Get the format-meta-info-obj for a given db-meta-info-obj and a format-name
+ */
+var embl_fasta = format(embl, 'fasta');
+
+/*
+ * Get the style-meta-info-obj for a given format-meta-info-onj
+ */
+ var embl_fasta_styles = info.styles(embl_fasta);
 
 ```
 
