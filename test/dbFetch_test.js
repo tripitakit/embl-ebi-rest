@@ -8,7 +8,7 @@ exports['test'] = {
 		done();
 	},
    
-	'dbFetch.get succeds with valid params': function(test) {
+	'dbfetch.get succeds with valid params': function(test) {
 		test.expect(1);
 		var sample = {db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw"}
 		var dbfetch = new Dbfetch(sample);
@@ -20,7 +20,7 @@ exports['test'] = {
 		dbfetch.get();
 	},
   
-	 'dbFetch.get with invalid db-name throws error': function(test) {
+	 'dbfetch.get with invalid db-name fails and throws error': function(test) {
 	    test.expect(1);
 	  	var sample = {db:"invalid-db-name", id:"WAP_RAT", format:"fasta", style:"raw"}
 	  	var dbfetch = new Dbfetch(sample);
@@ -28,7 +28,7 @@ exports['test'] = {
 		test.done();
 	},
   
-  	'dbfetch.get with multiple id as string' : function(test) {
+  	'dbfetch.get succeds with multiple ids' : function(test) {
   		test.expect(1);
 		var sample = {db:"embl", id:"M10051, K00650, D87894, AJ242600", format:"fasta", style:"raw"}
 		var dbfetch = new Dbfetch(sample);

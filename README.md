@@ -26,10 +26,9 @@ var wap_rat = new Dbfetch({ db: 'uniprotkb',
 							style: 'raw' });
 
 /* 
-  Dfetch is asynchronous.
-  When the entry is fully fetched it is assigned to the instance's .entry property,
-  and Dbfetch instances emit the 'stored' event. Listen for it and pass in the callback
-  function to access and handle the entry data.
+  Dfetch is an asynchronous events.EventEmitter: the 'stored' event 
+  is emitted when an entry is fetched and assigned to the instance's .entry property.
+  Add a listener for it with a callback function to access and handle the entry data.
  */
 wap_rat.on('stored', function() { console.log(wap_rat.entry) });
 
@@ -40,7 +39,7 @@ wap_rat.get();
 
 
 /* 
- * Dbfetch also handles multiple id/accession queries
+ * Multiple id/accession query
  */
 var multiple_ids = new Dbfetch({ db: 'embl',
 									 id: 'M10051, K00650, D87894, AJ242600',
