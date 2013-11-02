@@ -135,7 +135,7 @@ enab2.on('stored', function(){
 	console.log(this.entry);
 });
 
-enab2.idSearch('A00145,A00146', );
+enab2.idSearch('A00145,A00146');
 
 
 /**
