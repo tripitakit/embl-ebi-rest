@@ -44,7 +44,30 @@ exports['test ENAbrowser'] = {
 			test.done();
 		});
 		enab.idSearch(['A00145','A00146']);
+	},
+	
+	'Taxon search': function(test){
+		test.expect(1);
+		var enab = new ENAb();
+		enab.on('stored', function(){
+			console.log(this.entry);
+			test.ok(!!this.entry);
+			test.done();
+		});
+		enab.taxonSearch('turkey');
+	},
+	
+	'Taonomy portal': function(test){
+		test.expect(1);
+		var enab = new ENAb();
+		enab.on('stored', function(){
+			console.log(this.entry);
+			test.ok(!!this.entry);
+			test.done();
+		});
+		enab.taxonomyPortalSearch('9103', 'sequence_coding', false);
 	}
+	
 	
 
 

@@ -4,10 +4,11 @@ Client for EMBL-EBI REST Web Services.
 
 (Prototype) early alpha stage.
 
-* Dbfetch : get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style.
-* DbfetchInfo : introspection of Dbfetch database meta-informations.
+* Dbfetch: get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style. get()
 
-* ENAbrowser : The European Nucleotide Archive (ENA) captures and presents information relating to experimental workflows that are based around nucleotide sequencing. A typical workflow includes the isolation and preparation of material for sequencing, a run of a sequencing machine in which sequencing data are produced and a subsequent bioinformatic analysis pipeline. ENA records this information in a data model that covers input information (sample, experimental setup, machine configuration), output machine data (sequence traces, reads and quality scores) and interpreted information (assembly, mapping, functional annotation).
+* DbfetchInfo: introspection of Dbfetch database meta-informations. db(), formats(), format(), styles()
+
+* ENAbrowser: taxonSearch(), taxonomyPortalSearch(), idSearch()
 
 (more to be added here!)
 
@@ -32,7 +33,7 @@ var wap_rat = new Dbfetch({ db: 'uniprotkb',
 							format: 'fasta',
 							style: 'raw' });
 
-/** 
+/* 
   Dbfetch works as an asynchronous event emitter: the 'stored' event 
   is emitted when the entry is fetched and assigned to the instance's .entry property.
   Add a listener for 'store' to your Dbfetch instance, with a function to handle the entry.
@@ -47,7 +48,7 @@ wap_rat.on('stored', function(){
 wap_rat.get(); 
 
 
-/* 
+/**
  * Fetch multiple ids/accessions in raw/fasta format,
  * access the entries with method parseRawFasta().
  * It parses raw/fasta only entry into object { id, accession, description, seq },
@@ -67,24 +68,24 @@ multiple_ids.get();
 
 
 
-/**
+/****
  * DbfetchInfo
  * introspection of databases meta-informations
  */
 
 var info = require('embl-ebi-rest').DbfetchInfo;
  
-/*
+/**
  * Get a list of database names
  */
 var db_list = info.db()
   
-/*
+/**
  * Get the db-meta-info object for a named database
  */
 var embl = info.db('embl');
    
-/*
+/**
  * Get the infoFormatList meta-infos for a given db-meta-info object
  */
 var embl_formats = info.formats(embl)
@@ -94,7 +95,7 @@ var embl_formats = info.formats(embl)
  */
 var embl_fasta = info.format(embl, 'fasta');
 
-/*
+/**
  * Get the style-meta-info-obj for a given format-meta-info-obj
  */
  var embl_fasta_styles = info.styles(embl_fasta);
@@ -114,14 +115,51 @@ http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases
 ```javascript
 var ENAbrowser = require('embl-ebi-rest').ENAbrowser;
 
-/**
+// callback to inspect fetched entries 
+var print = function(){
+	console.log(this.entry);
+};
+
+/****
+ * Taxon search 
+ */ 
+var turkey = new ENAbrowser();
+turkey.on('stored', print);
+
+turkey.taxonSearch('turkey');
+
+
+/*****
+ * Taxonomy portal search
+ * taxonomyPortalSearch(<id:string>, <result:string>, <subtree:boolean>);
+ * 
+ * Supported result options:
+ * -------------------------
+ * sequence_release	: Nucleotide Sequences (EMBL-Bank Release)
+ * sequence_update	: Nucleotide Sequences (EMBL-Bank Update)
+ * sequence_coding	: Protein-coding sequences in EMBL-Bank
+ * sample			: Samples in ENA
+ * study			: Studies
+ * analysis			: Nucleotide sequence analyses in SRA
+ * analysis_study	: Nucleotide sequence analyses in SRA (grouped by study)
+ * read_run			: Raw reads in SRA
+ * read_experiment	: Raw reads in SRA (grouped by experiment)
+ * read_study		: Raw reads in SRA (grouped by study)
+ * read_trace		: Capillary Traces in Trace Archive
+ */
+var meleagris_cds = new ENAbrowser();
+meleagris_cds.on('stored', print);
+
+meleagris_cds.taxonomyPortalSearch('9103', 'sequence_coding', false);
+
+
+/****
+* Fetching for Ids
+*
 * Single id search, (display default='fasta')
 */
 var enab1 = new ENAbrowser();
-
-enab1.on('stored', function(){
-	console.log(this.entry);
-});
+enab1.on('stored', print);
 
 enab1.idSearch('A00145');
 
@@ -130,10 +168,7 @@ enab1.idSearch('A00145');
  * Query for multiple ids as string, (display default='fasta')
  */
 var enab2 = new ENAbrowser();
-
-enab2.on('stored', function(){
-	console.log(this.entry);
-});
+enab2.on('stored', print);
 
 enab2.idSearch('A00145,A00146');
 
@@ -142,12 +177,10 @@ enab2.idSearch('A00145,A00146');
  * Query for multiple ids as an array, explicit display 'xml'
  */
 var enab3 = new ENAbrowser();
-
-enab3.on('stored', function(){
-	console.log(this.entry);
-});
+enab3.on('stored', print);
 
 enab3.idSearch(['A00145','A00146'], 'xml');
+
 
 ```
 #### Documentation
