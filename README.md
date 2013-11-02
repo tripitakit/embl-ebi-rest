@@ -95,7 +95,7 @@ var embl_formats = info.formats(embl)
 var embl_fasta = info.format(embl, 'fasta');
 
 /*
- * Get the style-meta-info-obj for a given format-meta-info-onj
+ * Get the style-meta-info-obj for a given format-meta-info-obj
  */
  var embl_fasta_styles = info.styles(embl_fasta);
 
@@ -111,12 +111,12 @@ http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases
 
 
 ### ENAbrowser
-```
+```javascript
 var ENAbrowser = require('embl-ebi-rest').ENAbrowser;
 
 /**
 * Single id search, (display default='fasta')
- */
+*/
 var enab1 = new ENAbrowser();
 
 enab1.on('stored', function(){
@@ -136,6 +136,7 @@ enab2.on('stored', function(){
 });
 
 enab2.idSearch('A00145,A00146', );
+
 
 /**
  * Query for multiple ids as an array, explicit display 'xml'
