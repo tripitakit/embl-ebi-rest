@@ -1,6 +1,6 @@
 'use strict';
 
-var info = require('../lib/dbfetch/dbfetch-info.js');
+var info = require('../../lib/dbfetch/dbfetch-info.js');
 
 exports['test'] = {
 

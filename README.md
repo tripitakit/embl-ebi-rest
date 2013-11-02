@@ -17,6 +17,7 @@ $ npm install embl-ebi-rest
 ```
 
 ## Examples
+### Dbfetch
 ```javascript
 /**
  * Dependencies
@@ -99,14 +100,58 @@ var embl_fasta = info.format(embl, 'fasta');
  var embl_fasta_styles = info.styles(embl_fasta);
 
 ```
+#### Documentation
 
-## Documentation
-
-#### WSDbfetch
+##### WSDbfetch
 http://www.ebi.ac.uk/Tools/webservices/services/dbfetch_rest
 
-#### Databases
+##### Databases
 http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases
+
+
+
+### ENAbrowser
+```
+var ENAbrowser = require('embl-ebi-rest').ENAbrowser;
+
+/**
+* Single id search, (display default='fasta')
+ */
+var enab1 = new ENAbrowser();
+
+enab1.on('stored', function(){
+	console.log(this.entry);
+});
+
+enab1.idSearch('A00145');
+
+
+/**
+ * Query for multiple ids as string, (display default='fasta')
+ */
+var enab2 = new ENAbrowser();
+
+enab2.on('stored', function(){
+	console.log(this.entry);
+});
+
+enab2.idSearch('A00145,A00146', );
+
+/**
+ * Query for multiple ids as an array, explicit display 'xml'
+ */
+var enab3 = new ENAbrowser();
+
+enab3.on('stored', function(){
+	console.log(this.entry);
+});
+
+enab3.idSearch(['A00145','A00146'], 'xml');
+
+```
+#### Documentation
+http://www.ebi.ac.uk/ena/about/browse
+
 
 ## Contributing
 Any help, contribution, collaboration is highly appreciated! There's so much to learn.

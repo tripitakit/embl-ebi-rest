@@ -1,6 +1,6 @@
 'use strict';
 
-var Dbfetch = require('../lib/embl-ebi-rest.js').Dbfetch;
+var Dbfetch = require('../../lib/embl-ebi-rest.js').Dbfetch;
 
 exports['test'] = {
 
