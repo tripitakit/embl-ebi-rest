@@ -151,7 +151,7 @@ enab3.idSearch(['A00145','A00146'], 'xml');
 
 ```
 #### Documentation
-http://www.ebi.ac.uk/ena/about/browse
+http://www.ebi.ac.uk/ena/about/search_and_browse
 
 
 ## Contributing
