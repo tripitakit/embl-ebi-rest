@@ -2,14 +2,15 @@
 
 Client for EMBL-EBI REST Web Services.
 
-Stage: alpha:prototype
+[Unstable] [Alpha] 
 
+* ENAbrowser: "The European Nucleotide Archive (ENA) captures and presents information relating to experimental workflows that are based around nucleotide sequencing. A typical workflow includes the isolation and preparation of material for sequencing, a run of a sequencing machine in which sequencing data are produced and a subsequent bioinformatic analysis pipeline. ENA records this information in a data model that covers input information (sample, experimental setup, machine configuration), output machine data (sequence traces, reads and quality scores) and interpreted information (assembly, mapping, functional annotation)". Get entry by organism name with taxonSearch(), or single/multiple ids with idSearch()
 
-* Dbfetch: get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style. get()
+* Dbfetch: get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style. get() 
 
 * DbfetchInfo: introspection of Dbfetch database meta-informations. db(), formats(), format(), styles()
 
-* ENAbrowser: taxonSearch(), taxonomyPortalSearch(), idSearch()
+
 
 (more to be added here!)
 
@@ -33,20 +34,20 @@ var print = function(){
  * Retrieval using organism names
  * http://www.ebi.ac.uk/ena/about/browser#retrieval_organism_name
  
- * taxonSearch (<id:string>)
+ * taxonSearch(<organism :string>)
  * Retieves entry in xml format.
  */ 
-var mex_turkey = new ENAbrowser();
-mex_turkey.on('stored', print);
+var mexicanTurkey = new ENAbrowser();
 
-mex_turkey.taxonSearch('Meleagris gallopavo mexicana');
+mexicanTurkey.on('stored', print);
+mexicanTurkey.taxonSearch('Meleagris gallopavo mexicana');
 
 
 /**
  * Taxonomy Portal Options
  * http://www.ebi.ac.uk/ena/about/browser#taxonomy_portal_options
  *
- * taxonSearch (<id:string>, <result:string> [, <subtree:boolean> --default:false]);
+ * taxonSearch(<id :string>, <result :string> [, <subtree :boolean> --default=false]);
  * Retieves entry in xml format.
  *
  * valid options for results:
@@ -63,41 +64,41 @@ mex_turkey.taxonSearch('Meleagris gallopavo mexicana');
  * read_study		: Raw reads in SRA (grouped by study)
  * read_trace		: Capillary Traces in Trace Archive
  */
-var meleagris_gp_CDS = new ENAbrowser();
-meleagris_gp_CDS.on('stored', print);
+var mexicanTurkeyCDS = new ENAbrowser();
 
-meleagris_gp_CDS.taxonomyPortalSearch('9103', 'sequence_coding', false);
+mexicanTurkeyCDS.on('stored', print);
+mexicanTurkeyCDS.taxonSearch('109974', 'sequence_coding', false);
 
 
 
 /****
 * Retrieval using single identifiers
 * http://www.ebi.ac.uk/ena/about/browser#retrieval_single_identifier
-* idSearch (<id:string> [, <display:string> --default:'fasta'])
+* idSearch (<id :string> [, <display :string> --default:'fasta'])
 */
-var enab1 = new ENAbrowser();
-enab1.on('stored', print);
+var single = new ENAbrowser();
+single.on('stored', print);
 
-enab1.idSearch('A00145');
+single.idSearch('A00145');
 
 
 /**
  * Retrieval using multiple identifiers
  * http://www.ebi.ac.uk/ena/about/browser#retrieval_multiple_identifiers
  */
-var enab2 = new ENAbrowser();
-enab2.on('stored', print);
+var multiple = new ENAbrowser();
+multiple.on('stored', print);
 
-enab2.idSearch('A00145,A00146');
+multiple.idSearch('A00145,A00146');
 
 
 /**
  * Retrieval using an array of identifiers, with explicit display='xml'
  */
-var enab3 = new ENAbrowser();
-enab3.on('stored', print);
+var arrayMultiple = new ENAbrowser();
+arrayMultiple.on('stored', print);
 
-enab3.idSearch(['A00145','A00146'], 'xml');
+arrayMultiple.idSearch(['A00145','A00146'], 'xml');
 
 
 ```
