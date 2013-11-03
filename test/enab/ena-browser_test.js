@@ -54,10 +54,10 @@ exports['test ENAbrowser'] = {
 			test.ok(!!this.entry);
 			test.done();
 		});
-		enab.taxonSearch('turkey');
+		enab.taxonSearch('Meleagris gallopavo silvestris');
 	},
 	
-	'Taonomy portal': function(test){
+	'Taxon search with taxonomy portal options': function(test){
 		test.expect(1);
 		var enab = new ENAb();
 		enab.on('stored', function(){
@@ -65,7 +65,7 @@ exports['test ENAbrowser'] = {
 			test.ok(!!this.entry);
 			test.done();
 		});
-		enab.taxonomyPortalSearch('9103', 'sequence_coding', false);
+		enab.taxonSearch('109974', 'sequence_coding', false);
 	}
 	
 	

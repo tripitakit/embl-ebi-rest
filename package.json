@@ -1,7 +1,7 @@
 {
   "name": "embl-ebi-rest",
   "description": "EMBL-EBI Web Services REST client",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://github.com/tripitakit/embl-ebi-rest",
   "author": {
     "name": "Patrick De Marta",

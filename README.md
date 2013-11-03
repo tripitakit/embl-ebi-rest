@@ -2,7 +2,8 @@
 
 Client for EMBL-EBI REST Web Services.
 
-(Prototype) early alpha stage.
+Stage: alpha:prototype
+
 
 * Dbfetch: get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style. get()
 
@@ -17,7 +18,94 @@ Client for EMBL-EBI REST Web Services.
 $ npm install embl-ebi-rest
 ```
 
-## Examples
+##Examples
+
+### ENAbrowser
+```javascript
+var ENAbrowser = require('embl-ebi-rest').ENAbrowser;
+
+// callback to inspect fetched entries 
+var print = function(){
+	console.log(this.entry);
+};
+
+/****
+ * Retrieval using organism names
+ * http://www.ebi.ac.uk/ena/about/browser#retrieval_organism_name
+ 
+ * taxonSearch (<id:string>)
+ * Retieves entry in xml format.
+ */ 
+var mex_turkey = new ENAbrowser();
+mex_turkey.on('stored', print);
+
+mex_turkey.taxonSearch('Meleagris gallopavo mexicana');
+
+
+/**
+ * Taxonomy Portal Options
+ * http://www.ebi.ac.uk/ena/about/browser#taxonomy_portal_options
+ *
+ * taxonSearch (<id:string>, <result:string> [, <subtree:boolean> --default:false]);
+ * Retieves entry in xml format.
+ *
+ * valid options for results:
+ * --------------------------
+ * sequence_release	: Nucleotide Sequences (EMBL-Bank Release)
+ * sequence_update	: Nucleotide Sequences (EMBL-Bank Update)
+ * sequence_coding	: Protein-coding sequences in EMBL-Bank
+ * sample			: Samples in ENA
+ * study			: Studies
+ * analysis			: Nucleotide sequence analyses in SRA
+ * analysis_study	: Nucleotide sequence analyses in SRA (grouped by study)
+ * read_run			: Raw reads in SRA
+ * read_experiment	: Raw reads in SRA (grouped by experiment)
+ * read_study		: Raw reads in SRA (grouped by study)
+ * read_trace		: Capillary Traces in Trace Archive
+ */
+var meleagris_gp_CDS = new ENAbrowser();
+meleagris_gp_CDS.on('stored', print);
+
+meleagris_gp_CDS.taxonomyPortalSearch('9103', 'sequence_coding', false);
+
+
+
+/****
+* Retrieval using single identifiers
+* http://www.ebi.ac.uk/ena/about/browser#retrieval_single_identifier
+* idSearch (<id:string> [, <display:string> --default:'fasta'])
+*/
+var enab1 = new ENAbrowser();
+enab1.on('stored', print);
+
+enab1.idSearch('A00145');
+
+
+/**
+ * Retrieval using multiple identifiers
+ * http://www.ebi.ac.uk/ena/about/browser#retrieval_multiple_identifiers
+ */
+var enab2 = new ENAbrowser();
+enab2.on('stored', print);
+
+enab2.idSearch('A00145,A00146');
+
+
+/**
+ * Retrieval using an array of identifiers, with explicit display='xml'
+ */
+var enab3 = new ENAbrowser();
+enab3.on('stored', print);
+
+enab3.idSearch(['A00145','A00146'], 'xml');
+
+
+```
+####  References
+http://www.ebi.ac.uk/ena/about/search_and_browse
+
+
+
 ### Dbfetch
 ```javascript
 /**
@@ -101,7 +189,7 @@ var embl_fasta = info.format(embl, 'fasta');
  var embl_fasta_styles = info.styles(embl_fasta);
 
 ```
-#### Documentation
+#### References
 
 ##### WSDbfetch
 http://www.ebi.ac.uk/Tools/webservices/services/dbfetch_rest
@@ -110,81 +198,6 @@ http://www.ebi.ac.uk/Tools/webservices/services/dbfetch_rest
 http://www.ebi.ac.uk/Tools/dbfetch/dbfetch/dbfetch.databases
 
 
-
-### ENAbrowser
-```javascript
-var ENAbrowser = require('embl-ebi-rest').ENAbrowser;
-
-// callback to inspect fetched entries 
-var print = function(){
-	console.log(this.entry);
-};
-
-/****
- * Taxon search 
- */ 
-var turkey = new ENAbrowser();
-turkey.on('stored', print);
-
-turkey.taxonSearch('turkey');
-
-
-/*****
- * Taxonomy portal search
- * taxonomyPortalSearch(<id:string>, <result:string>, <subtree:boolean>);
- * 
- * Supported result options:
- * -------------------------
- * sequence_release	: Nucleotide Sequences (EMBL-Bank Release)
- * sequence_update	: Nucleotide Sequences (EMBL-Bank Update)
- * sequence_coding	: Protein-coding sequences in EMBL-Bank
- * sample			: Samples in ENA
- * study			: Studies
- * analysis			: Nucleotide sequence analyses in SRA
- * analysis_study	: Nucleotide sequence analyses in SRA (grouped by study)
- * read_run			: Raw reads in SRA
- * read_experiment	: Raw reads in SRA (grouped by experiment)
- * read_study		: Raw reads in SRA (grouped by study)
- * read_trace		: Capillary Traces in Trace Archive
- */
-var meleagris_cds = new ENAbrowser();
-meleagris_cds.on('stored', print);
-
-meleagris_cds.taxonomyPortalSearch('9103', 'sequence_coding', false);
-
-
-/****
-* Fetching for Ids
-*
-* Single id search, (display default='fasta')
-*/
-var enab1 = new ENAbrowser();
-enab1.on('stored', print);
-
-enab1.idSearch('A00145');
-
-
-/**
- * Query for multiple ids as string, (display default='fasta')
- */
-var enab2 = new ENAbrowser();
-enab2.on('stored', print);
-
-enab2.idSearch('A00145,A00146');
-
-
-/**
- * Query for multiple ids as an array, explicit display 'xml'
- */
-var enab3 = new ENAbrowser();
-enab3.on('stored', print);
-
-enab3.idSearch(['A00145','A00146'], 'xml');
-
-
-```
-#### Documentation
-http://www.ebi.ac.uk/ena/about/search_and_browse
 
 
 ## Contributing
