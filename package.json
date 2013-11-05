@@ -34,7 +34,7 @@
     "grunt": "~0.4.1"
   },
   "dependencies": {
-    "rest": "~1.0.0",
+    "rest": "~1.0.0"
   },
   "directories" : ["lib", "test"],
   "keywords": ["EMBL", "EBI", "rest", "webservices", "bioinformatics"]
