@@ -9,68 +9,73 @@ exports['test ENAbrowser'] = {
 		done();
 	},
   
-	'Double check a test property and method of ENAbrowser instance': function(test){
-		test.expect(2);
-		test.ok(this.enab.is_instance);
-		test.equal(this.enab.instance_of(), "ENAbrowser")
-		test.done();
-	},
-	
-	'Single id search (display default=fasta)': function(test){
+	'Single id search (null display default to fasta)': function(test){
 		test.expect(1);
-		var enab = new ENAb();
-		enab.on('stored', function(){
-			test.equal(this.entry.slice(0,4), ">ENA");
+		var enab = new ENAb(),
+			query = {id: 'A00145'}
+		enab.idSearch(query, function(self){
+			test.equal(self.entry.slice(0,4), ">ENA");
 			test.done();
 		});
-		enab.idSearch('A00145');
 	},
 	
-	'Query for multiple ids as string (display default=fasta)': function(test){
+	'Query for multiple ids as string with display:fasta': function(test){
 		test.expect(1);
-		var enab = new ENAb();
-		enab.on('stored', function(){
-			test.equal(this.entry.split('>').length - 1 , 2); // this split create a '' at index 0
+		var enab = new ENAb(),
+			query = {id: 'A00145,A00146', display: 'fasta'}
+		enab.idSearch(query, function(self){
+			test.equal(self.entry.split('>').length - 1 , 2); // this split create a '' at index 0
 			test.done();
 		});
-		enab.idSearch('A00145,A00146');
+
 	},
 	
 	'Query for multiple ids as array  (display default=fasta)': function(test){
 		test.expect(1);
-		var enab = new ENAb();
-		enab.on('stored', function(){
-			test.equal(this.entry.split('>').length - 1 , 2);
+		var enab = new ENAb(),
+			query = { id: ['A00145','A00146'] };
+		
+		enab.idSearch(query, function(self){
+			test.equal(self.entry.split('>').length - 1 , 2);
 			test.done();
 		});
-		enab.idSearch(['A00145','A00146']);
 	},
 	
 	'Taxon search': function(test){
 		test.expect(1);
-		var enab = new ENAb();
-		enab.on('stored', function(){
-			console.log(this.entry);
-			test.ok(!!this.entry);
+		var enab = new ENAb(),
+			query = { id : "Panthera pardus orientalis" };
+
+		enab.taxonSearch(query, function(self){
+			console.log(self.entry);
+			test.ok(!!self.entry);
 			test.done();
 		});
-		enab.taxonSearch('Meleagris gallopavo silvestris');
 	},
 	
-	'Taxon search with taxonomy portal options': function(test){
+	'Taxon search with taxonomy portal options (display default xml, subtree false)': function(test){
 		test.expect(1);
-		var enab = new ENAb();
-		enab.on('stored', function(){
-			console.log(this.entry);
-			test.ok(!!this.entry);
+		var enab = new ENAb(),
+			query = { id:'109974', result: 'sequence_coding'};
+			
+		enab.taxonSearch(query, function(self){
+			console.log(self.entry);
+			test.ok(!!self.entry);
 			test.done();
 		});
-		enab.taxonSearch('109974', 'sequence_coding', false);
-	}
+	},
 	
-	
-
-
-
-  
+	'Taxon search with taxonomy portal options, display fasta, subtree false)': function(test){
+		test.expect(1);
+		var enab = new ENAb(),
+			query = { id:'109974', result: 'sequence_coding', display: 'fasta'};
+			
+		enab.taxonSearch(query, function(self){
+			console.log(self.entry);
+			test.ok(!!self.entry);
+			test.done();
+		});
+	},
+	  
 };
+
