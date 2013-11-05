@@ -94,7 +94,7 @@ var enab = new ENAbrowser(),
 query = { id: 'A00145,A00146' }
 
 enab.idSearch(query, function(){
-console.log(enab.entry)
+	console.log(enab.entry)
 }); 
  
 
@@ -105,7 +105,7 @@ var enab = new ENAbrowser(),
 query = { id: ['A00145','A00146'], display: 'xml' }
 
 enab.idSearch(query, function(){
-console.log(enab.entry)
+	console.log(enab.entry)
 }); 
  
 ```
