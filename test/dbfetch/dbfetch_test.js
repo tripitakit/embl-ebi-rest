@@ -5,66 +5,74 @@ var Dbfetch = require('../../lib/embl-ebi-rest.js').Dbfetch;
 exports['test'] = {
 
 	setUp: function(done) {
+		this.dbfetch = new Dbfetch();
 		done();
 	},
    
-	'dbfetch.get succeds with valid params': function(test) {
+	'async get() fasta raw with valid params': function(test) {
 		test.expect(1);
 		var sample = {db:"uniprotkb", id:"WAP_RAT", format:"fasta", style:"raw"}
-		var dbfetch = new Dbfetch(sample);
-		dbfetch.on('stored', function(){
-			test.equal(this.entry.slice(0,18), ">sp|P01174|WAP_RAT");
+
+		this.dbfetch.get(sample, function(self){
+			test.equal(self.entry.slice(0,18), ">sp|P01174|WAP_RAT");
 			test.done();
 		});
-		dbfetch.get();
+
 	},
   
-	 'dbfetch.get() fails with invalid db-name and throws error': function(test) {
+	 'async get() fails with invalid db-name and throws error': function(test) {
 	    test.expect(1);
 	  	var sample = {db:"invalid-db-name", id:"WAP_RAT", format:"fasta", style:"raw"}
-	  	var dbfetch = new Dbfetch(sample);
-		test.throws(function() { dbfetch.get() });
+		test.throws(function() { this.dbfetch.get(sample, false) });
 		test.done();
 	},
   
-  	'dbfetch.get() succeds with multiple ids' : function(test) {
+  	'async get() fasta raw with multiple ids' : function(test) {
   		test.expect(1);
 		var sample = {db:"embl", id:"M10051, K00650, D87894, AJ242600", format:"fasta", style:"raw"}
-		var dbfetch = new Dbfetch(sample);
-		dbfetch.on('stored', function(){
-			test.equal(this.entry.length, 16415);
+		this.dbfetch.get(sample, function(self){
+			test.equal(self.entry.length, 16415);
 			test.done();
 		});
-		dbfetch.get();
   	},
 	
-	'dbfetch.parseRawFasta() returns an entry object with id, accession, description, seq properties' : function(test) {
+	'sync fasta2json() returns an json obj of the entry with id, accession, description, seq properties' : function(test) {
 		test.expect(4);
 		var sample = {db:"embl", id:"J00231", format:"fasta", style:"raw"};
-		var dbfetch = new Dbfetch(sample);
-		dbfetch.on('stored', function(){
-			var parsed = this.parseRawFasta();
-			test.equal(parsed.id, 'ENA');
-			test.equal(parsed.accession, 'J00231');
-			test.equal(parsed.description, 'J00231.1 Human Ig gamma3 heavy chain disease OMM protein mRNA.');
-			test.equal(parsed.seq.length, 1089);
+		this.dbfetch.get(sample, function(self) {
+			var parsedObj = self.fasta2json();
+			test.equal(parsedObj.id, 'ENA');
+			test.equal(parsedObj.accession, 'J00231');
+			test.equal(parsedObj.description, 'J00231.1 Human Ig gamma3 heavy chain disease OMM protein mRNA.');
+			test.equal(parsedObj.seq.length, 1089);
 		    test.done();
 		});
-		dbfetch.get();
 	},
 	
-	'dbfetch.parseRawFasta() with multple ids query returns an array of entry objects' : function(test) {
+	'sync fasta2json() stores jsonEntry property with id, accession, description, seq properties' : function(test) {
+		test.expect(4);
+		var sample = {db:"embl", id:"J00231", format:"fasta", style:"raw"};
+		this.dbfetch.get(sample, function(self) {
+			self.fasta2json();
+			var jsonEntry = self.jsonEntry;
+			test.equal(jsonEntry.id, 'ENA');
+			test.equal(jsonEntry.accession, 'J00231');
+			test.equal(jsonEntry.description, 'J00231.1 Human Ig gamma3 heavy chain disease OMM protein mRNA.');
+			test.equal(jsonEntry.seq.length, 1089);
+		    test.done();
+		});
+	},
+	
+	'sync fasta2json() on multple ids get() returns an array of entry objects' : function(test) {
   		test.expect(3);
-		var sample = {db:"embl", id:"M10051, K00650, D87894, AJ242600", format:"fasta", style:"raw"}
-		var dbfetch = new Dbfetch(sample);
-		dbfetch.on('stored', function(){
-			var parsed = this.parseRawFasta();
-			test.equal(typeof parsed, 'object');
-			test.equal(parsed.length, 4);
-			test.equal(Object.keys(parsed[0]).join(), 'id,accession,description,seq');
+		var sample = {db:"embl", id:"M10051, K00650", format:"fasta", style:"raw"}
+		this.dbfetch.get(sample, function(self){
+			var parsedArrayObj = self.fasta2json();
+			test.equal(typeof parsedArrayObj, 'object');
+			test.equal(parsedArrayObj.length, 2);
+			test.equal(Object.keys(parsedArrayObj[0]).join(), 'id,accession,description,seq');
 			test.done();
 		});
-		dbfetch.get();
 	}
-  
+
 };

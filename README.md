@@ -6,7 +6,7 @@ Client for EMBL-EBI REST Web Services.
 
 * ENAbrowser: "The European Nucleotide Archive (ENA) captures and presents information relating to experimental workflows that are based around nucleotide sequencing. A typical workflow includes the isolation and preparation of material for sequencing, a run of a sequencing machine in which sequencing data are produced and a subsequent bioinformatic analysis pipeline. ENA records this information in a data model that covers input information (sample, experimental setup, machine configuration), output machine data (sequence traces, reads and quality scores) and interpreted information (assembly, mapping, functional annotation)". Get entry by organism name with taxonSearch(), or single/multiple ids with idSearch()
 
-* Dbfetch: get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style. get() 
+* Dbfetch: get an entry or a set of entries by the entry identifier from a database specifying the required data format and result style.
 
 * DbfetchInfo: introspection of Dbfetch database meta-informations. db(), formats(), format(), styles()
 
@@ -116,49 +116,66 @@ http://www.ebi.ac.uk/ena/about/search_and_browse
 var Dbfetch = require('embl-ebi-rest').Dbfetch;
 
 /**
- * Create a Dbfetch instance with a query parameters object
+ * Create a Dbfetch instance and a query object,
+ * call get() to asynchronously fetch entry in the instance's 'entry' property.
+ * 
  */
-var wap_rat = new Dbfetch({ db: 'uniprotkb',
-							id:'WAP_RAT',
-							format: 'fasta',
-							style: 'raw' });
+var dbfetch = new Dbfetch(),
+	query = { db:'uniprotkb', id:'WAP_RAT', format: 'fasta', style: 'raw' };
 
-/* 
-  Dbfetch works as an asynchronous event emitter: the 'stored' event 
-  is emitted when the entry is fetched and assigned to the instance's .entry property.
-  Add a listener for 'store' to your Dbfetch instance, with a function to handle the entry.
- */
-wap_rat.on('stored', function(){
-	console.log(wap_rat.entry);
-});
-
-/*
- * Execute the query
- */
-wap_rat.get(); 
+dbfetch.get(query, function(){
+	console.log(dbfetch.entry);
+});	
 
 
 /**
- * Fetch multiple ids/accessions in raw/fasta format,
- * access the entries with method parseRawFasta().
- * It parses raw/fasta only entry into object { id, accession, description, seq },
- * an array of entry-objects is returned for multiple fasta records.
+ * The callback receives a 'self' argument referencing the Dbfetch instance object.
+ * The following code produces the same results of the previous example. 
+ * (It's used in nodeunit testing)
  */
-var multiple_ids = new Dbfetch({ db: 'embl',
-								 id: 'M10051, K00650, D87894, AJ242600',
-								 format: 'fasta',
-								 style: 'raw' });
-									 
-multiple_ids.on('stored', function() {
-	var entries = this.parseRawFasta();
-	console.log(entries);
-});
-
-multiple_ids.get();
+dbfetch.get(query, function(self){
+	console.log(self.entry);
+});	
 
 
 
-/****
+/**
+ * Fetch multiple ids/accessions in raw/fasta format
+ */
+var dbfetch = new Dbfetch(),
+	multiple_query = {
+						db: 'embl',
+						id: 'M10051, K00650',
+						format: 'fasta',
+						style: 'raw'
+					 };
+			
+ dbfetch.get(multiple_query, function(){
+ 	console.log(dbfetch.entry);
+ });	
+ 
+/*
+ * fasta2json();
+ * Synchronous parse of raw-fasta entries into { id, accession, description, seq } objects.
+ * An array of entry-objects is returned for multiple fasta records.
+ * The method also stores the parsed object in the instance 'jsonEntry' property
+ */
+var dbfetch = new Dbfetch(),
+multiple_query = { 	db: 'embl',
+					id: 'M10051, K00650',
+					format: 'fasta',
+					style: 'raw'  };
+
+dbfetch.get(multiple_query, function(){
+	json = dbfetch.fasta2json();  
+	console.log( json );
+	console.log( json == dbfetch.jsonEntry ); // true;
+});	
+ 
+
+
+
+/********************************************************
  * DbfetchInfo
  * introspection of databases meta-informations
  */
