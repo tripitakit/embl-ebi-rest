@@ -33,9 +33,9 @@ var print = function(){
 /****
  * Retrieval using organism names
  * http://www.ebi.ac.uk/ena/about/browser#retrieval_organism_name
- 
+ *
  * taxonSearch(<organism :string>)
- * Retieves entry in xml format.
+ * Retieves entry in ENA Taxonomy XML format
  */ 
 var mexicanTurkey = new ENAbrowser();
 
@@ -47,8 +47,9 @@ mexicanTurkey.taxonSearch('Meleagris gallopavo mexicana');
  * Taxonomy Portal Options
  * http://www.ebi.ac.uk/ena/about/browser#taxonomy_portal_options
  *
- * taxonSearch(<id :string>, <result :string> [, <subtree :boolean> --default=false]);
- * Retieves entry in xml format.
+ * taxonSearch( <id :string>, <result :string>
+	 			[, <display:string> --default='fasta', <subtree :boolean> --default=false] );
+ * Retieves entry in fasta/xml format.
  *
  * valid options for results:
  * --------------------------

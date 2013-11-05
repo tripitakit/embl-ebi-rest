@@ -1,7 +1,7 @@
 {
   "name": "embl-ebi-rest",
   "description": "EMBL-EBI Web Services REST client",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://github.com/tripitakit/embl-ebi-rest",
   "author": {
     "name": "Patrick De Marta",
@@ -34,7 +34,8 @@
     "grunt": "~0.4.1"
   },
   "dependencies": {
-    "rest": "~1.0.0"
+    "rest": "~1.0.0",
+	"sax": "~0.5.5"
   },
   "keywords": ["EMBL", "EBI", "rest", "webservices", "bioinformatics"]
 }
